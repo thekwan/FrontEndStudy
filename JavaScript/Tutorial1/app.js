@@ -17,10 +17,22 @@ const newsFeed = getData(NEWS_URL);
 window.addEventListener('hashchange', function() {
     const id = location.hash.substring(1);
     const newsConetnt = getData(CONTENT_URL.replace('@id', id));
-    const title = document.createElement('h1');
-    title.innerHTML = newsConetnt.title;
 
-    content.appendChild(title);
+    // clear the page content
+    container.innerHTML = '';
+
+    // fill the page screen with content title
+    container.innerHTML = `
+        <h1>
+            ${newsConetnt.title}
+        </h1>
+
+        <div>
+            <a href="#">
+                목록으로
+            </a>
+        </div>
+    `;
 });
 
 const ul = document.createElement('ul');

@@ -12,8 +12,6 @@ function getData(url) {
     return JSON.parse(ajax.response);
 }
 
-const newsFeed = getData(NEWS_URL);
-
 window.addEventListener('hashchange', function() {
     const id = location.hash.substring(1);
     const newsConetnt = getData(CONTENT_URL.replace('@id', id));
@@ -35,20 +33,21 @@ window.addEventListener('hashchange', function() {
     `;
 });
 
-const ul = document.createElement('ul');
-for (let i = 0; i < 10; i++) {
-    const div = document.createElement('div');
+const newsFeed = getData(NEWS_URL);
+const newsList = []
 
-    div.innerHTML = `
+newsList.push('<ul>');
+for (let i = 0; i < 10; i++) {
+    newsList.push(`
         <li>
             <a href="#${newsFeed[i].id}">
                 ${newsFeed[i].title} (${newsFeed[i].comments_count})
             </a>
         </li>
-    `;
-
-    ul.appendChild(div.firstElementChild);
+    `);
 }
+newsList.push('</ul>');
 
-container.appendChild(content);
-container.appendChild(ul);
+container.innerHTML = newsList.join('');
+// container.appendChild(content);
+// container.appendChild(nesList);
